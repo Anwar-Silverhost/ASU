@@ -1,0 +1,87 @@
+<!Doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>American Skill University</title>
+    <script defer data-api="/stats/api/event" data-domain="preview.tabler.io" src="/stats/js/script.js"></script>
+    <link href="{% static 'css/tabler.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-flags.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-payments.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/tabler-vendors.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/demo.min.css' %}" rel="stylesheet" />
+    <style>
+        .navbar-brand-image {
+            height: 4rem !important;
+            width: auto;
+        }
+    </style>
+</head>
+
+
+<body class=" d-flex flex-column">
+
+ 
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="." class="navbar-brand navbar-brand-autodark">
+                    <img src="../static/img/ASU-LOGO.png" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                </a>
+            </div>
+
+            {% if saved_message %}
+    <div id="alertMessage" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        Invalid username or password.
+
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(function () {
+                var alertMessage = document.getElementById("alertMessage");
+                if (alertMessage) {
+                    alertMessage.style.display = 'none';
+                }
+            }, 5000);
+        });
+    </script>
+    {% endif %}
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">Welcome Academic User</h2>
+                    <form action="{% url 'academic_login' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" autocomplete="off" name="username">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Password
+                                
+                            </label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" name="password" class="form-control"
+                                    autocomplete="off">
+                               
+                            </div>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+           
+        </div>
+    </div>
+    <script src="{% static 'js/tabler.min.js' %}" defer></script>
+    <script src="{% static 'js/demo.min.js' %}" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<div class="page-wrapper">
+
+    <div class="page-body">
+        <div class="container-xl">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Registration info</h3>
+                </div>
+                <div class="card-body">
+                    <div class="datagrid">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Academic</div>
+                            <div class="datagrid-content">{{ac.academic}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Enrolment Number</div>
+                            <div class="datagrid-content">{{ac.EnrolmentNo}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">First Name</div>
+                            <div class="datagrid-content">{{ac.firstName}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Last Name</div>
+                            <div class="datagrid-content">{{ac.lastName}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Date of Birth</div>
+                            <div class="datagrid-content">{{ac.dateofbirth}}</div>
+                        </div>
+
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Gender</div>
+                            <div class="datagrid-content">{{ac.gender}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Email</div>
+                            <div class="datagrid-content">{{ac.email}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Phone</div>
+                            <div class="datagrid-content">{{ac.phone}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">City</div>
+                            <div class="datagrid-content">{{ac.city}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Country</div>
+                            <div class="datagrid-content">{{ac.country}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Qualification</div>
+                            <div class="datagrid-content">{{ac.qualification}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Course</div>
+                            <div class="datagrid-content">{{ac.course}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Parent Name</div>
+                            <div class="datagrid-content">{{ac.parentName}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Contact Number</div>
+                            <div class="datagrid-content">{{ac.contactNumber}}</div>
+                        </div>
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+
+                <div class="col-4">
+                    <div class="card mt-3">
+
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-5">Status :</dt>
+                                <dd class="col-7">
+
+                                    {% if ac.user_status == 'Not Completed' %}
+                                    <span class="status status-red">
+                                        {% else %}
+                                        <span class="status status-green">
+                                            {% endif %}
+
+
+                                            {{ac.user_status}}
+                                        </span>
+
+
+
+                                </dd>
+                                <dt class="col-6"></dt>
+                                <dd class="col-6"></dd>
+                                <dt class="col-6"></dt>
+                                <dd class="col-6"></dd>
+                                <dt class="col-5">Certificate :</dt>
+                                <dd class="col-7">
+                                    {% if ac.Certificate_status == 'Not Issued' %}
+                                    <span class="status status-red">
+                                        {% else %}
+                                        <span class="status status-green">
+                                            {% endif %}
+
+
+
+                                            {{ac.Certificate_status}}
+                                </dd>
+
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-4">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h4>Status</h4>
+                            <form action="{% url 'admin_Update_status' ac.id %}" method="post" enctype="multipart/form-data" class="row">
+                                {% csrf_token %}
+                                <div class="col">
+                                    <input hidden type="text" name="which" value="1" id="">
+                                    <select name="status_select" id="" class="form-select">
+                                        <option value="Not Completed">Not Completed</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                </div>
+                             </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h4>Certificate</h4>
+                            <form action="{% url 'admin_Update_status' ac.id %}" method="post" enctype="multipart/form-data" class="row">
+                                {% csrf_token %}
+                                <div class="col">
+                                    <input hidden type="text" name="which" value="2" id="">
+                                    <select name="cirt_select" id="" class="form-select">
+                                        <option value="Not Issued">Not Issued</option>
+                                        <option value="Issued">Issued</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+</div>
+
+<script>
+    var mobnav = document.querySelector('.nav_regs');
+    mobnav.classList.add('active');
+</script>
+{% endblock %}

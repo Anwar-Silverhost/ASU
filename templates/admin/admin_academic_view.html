@@ -1,0 +1,377 @@
+{% extends 'admin/admin_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+
+
+
+<div class="page-wrapper">
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="card">
+
+                <div class="card-header row align-items-center">
+                    <div class="col-6">
+
+                        <h3 class="card-title">Academy : {{a.academicName}}</h3>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="row  ">
+                            <div class="col-5"></div>
+                            <a data-bs-toggle="modal" data-bs-target="#modal-success"
+                                class=" col-2 btn btn-purple me-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 5l0 14" />
+                                    <path d="M5 12l14 0" />
+                                </svg>
+
+
+                                Seats
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#modal-report"
+                                class=" col-2 btn btn-outline-primary me-2">
+                                Edit
+                            </a>
+
+                            {% if a.status == '1' %}
+                              
+                            
+
+                            <a data-bs-toggle="modal" data-bs-target="#modal-small"
+                                class=" col-2 btn btn-outline-google text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-power"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M7 6a7.75 7.75 0 1 0 10 0" />
+                                    <path d="M12 4l0 8" />
+                                </svg>
+                            </a>
+
+                            <div class="modal modal-blur fade" id="modal-small" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="modal-title">Are you sure?</div>
+                                            <div>Are you confident in proceeding with the closure of academic operations?</div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-link link-secondary me-auto"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            <a href="{% url 'shutDown_academi' a.id %}">
+                                            <button type="button" class="btn btn-danger">Yes</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% else %}
+
+                            <a data-bs-toggle="modal" data-bs-target="#modal-small"
+                                class=" col-2 btn btn-outline-green text-center">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5" /></svg>
+                            </a>
+
+                            <div class="modal modal-blur fade" id="modal-small" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="modal-title">Are you sure?</div>
+                                            <div>Are you certain about recommencing academic activities?
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-link link-secondary me-auto"
+                                                data-bs-dismiss="modal">Cancel</button>
+                                            <a href="{% url 'restart_academi' a.id %}">
+                                            <button type="button" class="btn btn-green">Yes</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endif %}
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                
+
+                <div class="modal modal-blur fade" id="modal-success" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <form class="modal-content" action="{% url 'admin_academic_add_seat' a.id %}" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-status bg-success"></div>
+                            <div class="modal-body text-center py-4">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-armchair mb-2 text-green icon-lg" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z" />
+                                    <path d="M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5" />
+                                    <path d="M6 19v2" />
+                                    <path d="M18 19v2" />
+                                </svg>
+                                <h3>Add Seats</h3>
+                                <h4>Current Seats : {{a.seatCount}}</h4>
+
+
+                                <input type="number" required autocomplete="off" class="form-control"
+                                    placeholder="Enter Seats Count" name="seatsCount" id="seatsCount" min="1"
+                                    title="Please enter positive numbers only">
+
+                            </div>
+                            <div class="modal-footer">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                Cancel
+                                            </a></div>
+                                        <div class="col">
+                                            <button class="btn btn-success w-100" type="submit"> Update</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+                <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <form class="modal-content" action="{% url 'update_academic' a.id %}"
+                            enctype="multipart/form-data" method="post">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Academic Name</label>
+                                            <input type="text" class="form-control" value="{{a.academicName}}"
+                                                name="academic_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Coordinator Name</label>
+                                            <input type="text" class="form-control" value="{{a.coordinatorName}}"
+                                                name="coordinator_name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" value="{{a.email}}" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Phone</label>
+                                            <input type="phone" class="form-control" value="{{a.phone}}" name="phone">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"> Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="card-body">
+                    <div class="datagrid">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Academic ID</div>
+                            <div class="datagrid-content">{{a.academicId}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Coordinator Name</div>
+                            <div class="datagrid-content">{{a.coordinatorName}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Email</div>
+                            <div class="datagrid-content">{{a.email}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Phone</div>
+                            <div class="datagrid-content">{{a.phone}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Created Date</div>
+                            <div class="datagrid-content">{{a.saveDate}}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Username</div>
+                            <div class="datagrid-content">{{a.username}}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Password</div>
+                            <div class="datagrid-content">{{a.password}}</div>
+                        </div>
+
+
+
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Alocated Seats</div>
+                            <div class="datagrid-content">
+                                <span class="status status-purple">
+                                    {{a.seatCount}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Occupaid Seats</div>
+                            <div class="datagrid-content">
+                                <span class="status status-green">
+                                    {{ac_usr_occu_count}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Unoccupaid Seats</div>
+                            <div class="datagrid-content">
+                                <span class="status status-red">
+                                    {{ac_usr_unoccu_count}}
+                                </span>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h3 class="card-title">Academy Details</h3>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable" id="ac_usrTable">
+                            <thead>
+                                <tr>
+                                    <th>EnrolmentNo</th>
+                                    <th>
+                                        <b>N</b>ame
+                                    </th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>City</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for au in ac_users %}
+                                <tr>
+                                    <td>{{au.EnrolmentNo}}</td>
+                                    <td>{{au.firstName}}</td>
+                                    <td>{{au.gender}}</td>
+                                    <td>{{au.email}}</td>
+                                    <td>{{au.phone}}</td>
+                                    <td>{{au.city}}</td>
+                                    <td class="text-end">
+                                        <a href="{% url 'admin_user_reg_view' au.id %}" class="btn">
+                                            View
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+
+
+                                {% endfor %}
+
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#ac_usrTable').DataTable({
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
+    });
+</script>
+
+
+<script>
+    var mobnav = document.querySelector('.nav_academic');
+    mobnav.classList.add('active');
+</script>
+{% endblock %}

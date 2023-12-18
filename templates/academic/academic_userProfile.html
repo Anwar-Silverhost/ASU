@@ -1,0 +1,244 @@
+{% extends 'academic/academic_navbar.html' %}
+{% block content %}
+{% load static %}
+
+<main id="main" class="main">
+
+    <section class="section profile">
+        <div class="row">
+            
+            <div class="col-xl-12">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab"
+                                    data-bs-target="#profile-overview">Overview</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
+                                    Profile</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                <div class="row mt-3">
+                                    <div class="col-lg-3 col-md-4 label ">Status</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {% if ause.user_status == 'Not Completed' %}
+                                          <span class="badge bg-danger">Not Completed</span>
+                                          {% else %}
+                                          <span class="badge bg-success">Completed</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-lg-3 col-md-4 label ">Certificate Status</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {% if ause.Certificate_status == 'Not Issued' %}
+                                        <span class="badge bg-danger">Not Issued</span>
+                                        {% else %}
+                                        <span class="badge bg-success">Issued</span>
+                                        {% endif %}
+                                       
+                                    </div>
+                                </div> 
+
+
+                                <h5 class="card-title">Profile Details</h5>
+
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">EnrolmentNo</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.EnrolmentNo}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.firstName}} {{ause.lastName}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.dateofbirth}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Gender</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.gender}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.email}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.phone}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">City</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.city}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Country</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.country}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Qualification</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.qualification}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Cource</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.course}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Parent Name</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.parentName}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Contact Number</div>
+                                    <div class="col-lg-9 col-md-8">{{ause.contactNumber}}</div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <!-- Profile Edit Form -->
+                                <form action="{% url 'update_user' ause.id %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First
+                                            Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="firstName" type="text" class="form-control"
+                                                value="{{ause.firstName}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="lastName" type="text" class="form-control"
+                                                value="{{ause.lastName}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Date of
+                                            Birth</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="dateofbirth" type="date" class="form-control"
+                                                value="{{ause.dateofbirth | date:'Y-m-d'}}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label for="company" class="col-md-4 col-lg-3 col-form-label">Gender</label>
+                                        <div class="col-md-8 col-lg-9">
+
+                                            <select required class="form-select" name="gender"
+                                                aria-label="Default select example">
+                                                <option value="{{ause.gender}}" disabled>{{ause.gender}}</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control"
+                                                value="{{ause.email}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="phone" type="number" class="form-control"
+                                                value="{{ause.phone}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">City</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="city" type="text" class="form-control"
+                                                value="{{ause.city}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="country" type="text" class="form-control"
+                                                value="{{ause.country}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName"
+                                            class="col-md-4 col-lg-3 col-form-label">Qualification</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="qualification" type="text" class="form-control"
+                                                value="{{ause.qualification}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Course</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="course" type="text" class="form-control"
+                                                value="{{ause.course}}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Parent
+                                            Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="parentName" type="text" class="form-control"
+                                                value="{{ause.parentName}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Contact
+                                            Number</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="contactNumber" type="text" class="form-control"
+                                                value="{{ause.contactNumber}}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+                        </div><!-- End Bordered Tabs -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+{% endblock %}

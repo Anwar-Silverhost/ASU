@@ -1,0 +1,104 @@
+{% extends 'academic/academic_navbar.html' %}
+{% block content %}
+{% load static %}
+
+
+<main id="main" class="main">
+
+
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                {% if noavilbleseat_message %}
+
+
+                <div id="msg">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-octagon me-1"></i>
+                        Sorry, the allocated seats are full. Please contact the administrator to inquire about
+                        availability or be added to the waiting list.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        setTimeout(function () {
+                            var alertMessage = document.getElementById("msg");
+                            if (alertMessage) {
+                                alertMessage.style.display = 'none';
+                            }
+                        }, 5000);
+                    });
+                </script>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mt-2 mb-2 align-items-center">
+                            <div class="col">
+                                <h5 class="card-title">Registration Table</h5>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{% url 'academic_registrations' %}">
+                                    <button class="btn btn-primary">Register</button></a>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>EnrolmentNo</th>
+                                    <th>
+                                        <b>N</b>ame
+                                    </th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>City</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for u in users %}
+                                <tr>
+                                    <td>{{u.EnrolmentNo}}</td>
+                                    <td>{{u.firstName}}</td>
+                                    <td>{{u.gender}}</td>
+                                    <td>{{u.email}}</td>
+                                    <td>{{u.phone}}</td>
+                                    <td>{{u.city}}</td>
+                                    <td class="text-center"><a href="{% url 'academic_userProfile' u.id %}"><button class="btn btn-outline-primary btn-sm">View</button></a>
+                                        </td>
+
+                                </tr>
+
+
+
+                                {% endfor %}
+
+
+
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+{% endblock %}
